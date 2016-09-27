@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="styles.css" media="screen" title="no title">
+    <script src="https://unpkg.com/react@15.3.2/dist/react.min.js"></script>
+    <script src="https://unpkg.com/react-dom@15.3.2/dist/react-dom.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.24/browser.min.js"></script>
+    <script type="text/babel">
+      var Answer = React.createClass( {
+        render: function() {
+          return (
+            <p>{this.props.answer}</p>
+          )
+        }
+      });
+
+      var Form = React.createClass({
+        handleSubmit: function(e) {
+          e.preventDefault();
+          this.props.numberHandler(parseInt(this.refs.firstNumber.value), parseInt(this.refs.secondNumber.value));
+        },
+
+        render: function() {
+          return (
+            <form onSubmit={this.handleSubmit}>
+              <input type="number" ref="firstNumber" />
+              <input type="number" ref="secondNumber" />
+              <button>Find Answer</button>
+            </form>
+          )
+        }
+      })
+
+      var Main = React.createClass({
+        getInitialState: function() {
+          return { answer: 0}
+        },
+        getAnswer: function(firstNumber, secondNumber) {
+          var newAnswer = firstNumber + secondNumber;
+          console.log(newAnswer);
+          this.setState({answer: newAnswer})
+        },
+        getInitialState: function(){
+          return {answer: 0}
+        },
+        render: function() {
+          return (
+            <div>
+              <Form numberHandler={this.getAnswer} />
+              <Answer answer={this.state.answer} />
+            </div>
+          )
+        }
+      });
+
+      ReactDOM.render(<Main />, document.getElementById('main'));
+    </script>
+  </head>
+  <body>
+    <div class="container" id="main">
+
+    </div>
+  </body>
+</html>
