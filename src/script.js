@@ -1,28 +1,3 @@
-var Answer = React.createClass( {
-  render: function() {
-    return (
-      <p>{this.props.answer}</p>
-    )
-  }
-});
-
-var Form = React.createClass({
-  handleSubmit: function(e) {
-    e.preventDefault();
-    this.props.numberHandler(parseInt(this.refs.firstNumber.value), parseInt(this.refs.secondNumber.value));
-  },
-
-  render: function() {
-    return (
-      <form onSubmit={this.handleSubmit}>
-        <input type="number" ref="firstNumber" />
-        <input type="number" ref="secondNumber" />
-        <button>Find Answer</button>
-      </form>
-    )
-  }
-});
-
 var GoalNumber = React.createClass({
   getInitialState: function() {
     return { goal: 0 }
@@ -43,9 +18,38 @@ var GoalNumber = React.createClass({
   }
 });
 
+var NumberCard = React.createClass({
+  getInitialState: function(){
+    return {cardNumbers: []}
+  },
+
+  getBigNumber: function() {
+    var numbersArray = [10, 25, 50, 75, 100];
+    var getIndex = Math.floor(Math.random() * numbersArray.length);
+    var newNumberCard = numbersArray[getIndex];
+    console.log(newNumberCard);
+  },
+
+  getSmallNumber: function() {
+    var numbersArray = [1, 2, 3, 4, 5, 6, 7, 8 , 9];
+    var getIndex = Math.floor(Math.random() * numbersArray.length);
+    var newNumberCard = numbersArray[getIndex];
+    console.log(newNumberCard);
+  },
+
+  render: function() {
+    return (
+      <div>
+        <button onClick={this.getBigNumber}>big</button>
+        <button onClick={this.getSmallNumber}>small</button>
+      </div>
+    )
+  }
+});
+
 var Main = React.createClass({
   getInitialState: function() {
-    return { answer: 0}
+    return { answer: 0 }
   },
   getAnswer: function(firstNumber, secondNumber) {
     var newAnswer = firstNumber + secondNumber;
@@ -59,6 +63,7 @@ var Main = React.createClass({
     return (
       <div>
         <GoalNumber />
+        <NumberCard />
       </div>
     )
   }
