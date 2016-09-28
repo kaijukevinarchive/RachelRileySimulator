@@ -4,7 +4,7 @@ var GoalNumber = React.createClass({
   },
 
   getRandomGoal: function() {
-    var newGoal = Math.floor((Math.random() * 999) + 100);
+    var newGoal = 100 + (Math.floor((Math.random() * (999 - 100))));
     this.setState({ goal: newGoal })
   },
 
@@ -20,26 +20,48 @@ var GoalNumber = React.createClass({
 
 var NumberCard = React.createClass({
   getInitialState: function(){
-    return {cardNumbers: []}
+    return {
+      cardNumbers: [],
+      bigCards: [25, 50, 75, 100],
+      smallCards: [1, 2, 3, 4, 5, 6, 7, 8 , 9, 10, 1, 2, 3, 4, 5, 6, 7, 8 , 9, 10]
+    }
   },
 
   getBigNumber: function() {
-    var numbersArray = [10, 25, 50, 75, 100];
-    var getIndex = Math.floor(Math.random() * numbersArray.length);
-    var newNumberCard = numbersArray[getIndex];
-    console.log(newNumberCard);
+    var cards = this.state.bigCards;
+    var randomIndex = Math.floor(Math.random() * cards.length);
+    var cardToAdd = this.state.bigCards[randomIndex];
+    if (cardToAdd === undefined) {
+      return;
+    } else {
+      this.setState({cardNumbers: this.state.cardNumbers.concat([cardToAdd])});
+      cards.splice(randomIndex,1);
+      this.setState({bigCards: cards})
+    }
   },
 
   getSmallNumber: function() {
-    var numbersArray = [1, 2, 3, 4, 5, 6, 7, 8 , 9];
-    var getIndex = Math.floor(Math.random() * numbersArray.length);
-    var newNumberCard = numbersArray[getIndex];
-    console.log(newNumberCard);
+    var cards = this.state.smallCards;
+    var randomIndex = Math.floor(Math.random() * cards.length);
+    var cardToAdd = this.state.smallCards[randomIndex];
+    if (cardToAdd === undefined || this.state.cardNumbers.length >= 6) {
+      return;
+    } else {
+      this.setState({cardNumbers: this.state.cardNumbers.concat([cardToAdd])});
+      cards.splice(randomIndex,1);
+      this.setState({smallCards: cards})
+    }
   },
 
   render: function() {
+    var cards = this.state.cardNumbers;
     return (
-      <div>
+      <div className="numberCards">
+        <ul>
+          {cards.map(function(number, index){
+            return (<li>{number}</li>)
+          })}
+        </ul>
         <button onClick={this.getBigNumber}>big</button>
         <button onClick={this.getSmallNumber}>small</button>
       </div>
@@ -49,15 +71,7 @@ var NumberCard = React.createClass({
 
 var Main = React.createClass({
   getInitialState: function() {
-    return { answer: 0 }
-  },
-  getAnswer: function(firstNumber, secondNumber) {
-    var newAnswer = firstNumber + secondNumber;
-    console.log(newAnswer);
-    this.setState({answer: newAnswer})
-  },
-  getInitialState: function(){
-    return {answer: 0}
+    return { goal: 0, }
   },
   render: function() {
     return (

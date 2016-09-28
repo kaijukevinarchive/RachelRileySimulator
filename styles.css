@@ -11,3 +11,22 @@ body {
   text-align: center;
   color: #FFFFFF;
 }
+
+.numberCards {
+
+}
+
+.numberCards ul {
+  text-align: center;
+  margin: 0;
+  padding: 0;
+}
+
+.numberCards ul li {
+  color: #FFFFFF;
+  font-family: Helvetica, sans-serif;
+  font-size: 24px;
+  list-style-type: none;
+  display: inline-block;
+  padding: 10px 10px;
+}
